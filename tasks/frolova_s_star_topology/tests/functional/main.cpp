@@ -50,10 +50,10 @@ TEST(frolova_s_star_topology, data_length_0) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.validation(), true);
-    task.pre_processing();
-    task.run();
-    task.post_processing();
+    ASSERT_EQ(task.Validation(), true);
+    task.PreProcessing();
+    task.Run();
+    task.PostProcessing();
   }
 
   int is_failed = 0;
@@ -97,10 +97,10 @@ TEST(frolova_s_star_topology, data_length_64) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.validation(), true);
-    task.pre_processing();
-    task.run();
-    task.post_processing();
+    ASSERT_EQ(task.Validation(), true);
+    task.PreProcessing();
+    task.Run();
+    task.PostProcessing();
   }
 
   int is_failed = 0;
@@ -144,10 +144,10 @@ TEST(frolova_s_star_topology, data_length_1024) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.validation(), true);
-    task.pre_processing();
-    task.run();
-    task.post_processing();
+    ASSERT_EQ(task.Validation(), true);
+    task.PreProcessing();
+    task.Run();
+    task.PostProcessing();
   }
 
   int is_failed = 0;
@@ -191,10 +191,10 @@ TEST(frolova_s_star_topology, data_length_32768) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.validation(), true);
-    task.pre_processing();
-    task.run();
-    task.post_processing();
+    ASSERT_EQ(task.Validation(), true);
+    task.PreProcessing();
+    task.Run();
+    task.PostProcessing();
   }
 
   int is_failed = 0;
