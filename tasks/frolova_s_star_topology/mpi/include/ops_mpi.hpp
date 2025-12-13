@@ -1,7 +1,5 @@
 #pragma once
 
-#include <mpi.h>
-
 #include <vector>
 
 #include "frolova_s_star_topology/common/include/common.hpp"
@@ -21,9 +19,9 @@ class FrolovaSStarTopologyMPI : public BaseTask {
   bool PreProcessingImpl() override;
   bool RunImpl() override;
   bool PostProcessingImpl() override;
-  std::vector<int> data;
-  std::vector<int> output;
-  int dest;
+  std::vector<int> data_;
+  std::vector<int> output_;
+  int dest_;
 };
 
 }  // namespace frolova_s_star_topology

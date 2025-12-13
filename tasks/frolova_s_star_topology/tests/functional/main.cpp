@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
 
-#include <cstdint>
+#include <algorithm>
+#include <cstddef>
+#include <numeric>
 #include <random>
 #include <vector>
 
@@ -9,20 +11,20 @@
 
 namespace frolova_s_star_topology {
 
-std::vector<int> make_random_vector(size_t sz) {
+static std::vector<int> MakeRandomVector(size_t sz) {
   std::random_device dev;
   std::mt19937 gen(dev());
   std::vector<int> vec(sz);
   for (size_t i = 0; i < sz; i++) {
-    vec[i] = gen() % 200 - 100;
+    vec[i] = static_cast<int>((gen() % 200) - 100);
   }
   return vec;
 }
 
 }  // namespace frolova_s_star_topology
 
-TEST(frolova_s_star_topology, data_length_0) {
-  const size_t DataLength = 0;
+TEST(frolovaSStar, dataLength0) {
+  const size_t data_length = 0;
   int rank = 0;
   int size = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -33,19 +35,19 @@ TEST(frolova_s_star_topology, data_length_0) {
   }
 
   std::vector<int> destinations(size - 1);
-  std::vector<int> data((size - 1) * DataLength);
-  std::vector<int> res(DataLength);
+  std::vector<int> data((size - 1) * data_length);
+  std::vector<int> res(data_length);
 
   if (rank == 0) {
     std::random_device rd;
     destinations.resize(size - 1);
-    std::iota(destinations.begin(), destinations.end(), 1);
+    std::ranges::iota(destinations, 1);
     std::shuffle(destinations.begin(), destinations.end(), rd);
-    data = frolova_s_star_topology::make_random_vector((size - 1) * DataLength);
+    data = frolova_s_star_topology::MakeRandomVector((size - 1) * data_length);
   }
 
   MPI_Bcast(destinations.data(), size - 1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Bcast(data.data(), (size - 1) * DataLength, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(data.data(), static_cast<int>((size - 1) * data_length), MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank != 0) {
     int dst = destinations[rank - 1];
@@ -68,8 +70,8 @@ TEST(frolova_s_star_topology, data_length_0) {
   }
 }
 
-TEST(frolova_s_star_topology, data_length_64) {
-  const size_t DataLength = 64;
+TEST(frolovaSStar, dataLength64) {
+  const size_t data_length = 64;
   int rank = 0;
   int size = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -80,19 +82,19 @@ TEST(frolova_s_star_topology, data_length_64) {
   }
 
   std::vector<int> destinations(size - 1);
-  std::vector<int> data((size - 1) * DataLength);
-  std::vector<int> res(DataLength);
+  std::vector<int> data((size - 1) * data_length);
+  std::vector<int> res(data_length);
 
   if (rank == 0) {
     std::random_device rd;
     destinations.resize(size - 1);
-    std::iota(destinations.begin(), destinations.end(), 1);
+    std::ranges::iota(destinations, 1);
     std::shuffle(destinations.begin(), destinations.end(), rd);
-    data = frolova_s_star_topology::make_random_vector((size - 1) * DataLength);
+    data = frolova_s_star_topology::MakeRandomVector((size - 1) * data_length);
   }
 
   MPI_Bcast(destinations.data(), size - 1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Bcast(data.data(), (size - 1) * DataLength, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(data.data(), static_cast<int>((size - 1) * data_length), MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank != 0) {
     int dst = destinations[rank - 1];
@@ -115,8 +117,8 @@ TEST(frolova_s_star_topology, data_length_64) {
   }
 }
 
-TEST(frolova_s_star_topology, data_length_1024) {
-  const size_t DataLength = 1024;
+TEST(frolovaSStar, dataLength1024) {
+  const size_t data_length = 1024;
   int rank = 0;
   int size = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -127,19 +129,19 @@ TEST(frolova_s_star_topology, data_length_1024) {
   }
 
   std::vector<int> destinations(size - 1);
-  std::vector<int> data((size - 1) * DataLength);
-  std::vector<int> res(DataLength);
+  std::vector<int> data((size - 1) * data_length);
+  std::vector<int> res(data_length);
 
   if (rank == 0) {
     std::random_device rd;
     destinations.resize(size - 1);
-    std::iota(destinations.begin(), destinations.end(), 1);
+    std::ranges::iota(destinations, 1);
     std::shuffle(destinations.begin(), destinations.end(), rd);
-    data = frolova_s_star_topology::make_random_vector((size - 1) * DataLength);
+    data = frolova_s_star_topology::MakeRandomVector((size - 1) * data_length);
   }
 
   MPI_Bcast(destinations.data(), size - 1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Bcast(data.data(), (size - 1) * DataLength, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(data.data(), static_cast<int>((size - 1) * data_length), MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank != 0) {
     int dst = destinations[rank - 1];
@@ -162,8 +164,8 @@ TEST(frolova_s_star_topology, data_length_1024) {
   }
 }
 
-TEST(frolova_s_star_topology, data_length_32768) {
-  const size_t DataLength = 32768;
+TEST(frolovaSStar, dataLength32768) {
+  const size_t data_length = 32768;
   int rank = 0;
   int size = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -174,19 +176,19 @@ TEST(frolova_s_star_topology, data_length_32768) {
   }
 
   std::vector<int> destinations(size - 1);
-  std::vector<int> data((size - 1) * DataLength);
-  std::vector<int> res(DataLength);
+  std::vector<int> data((size - 1) * data_length);
+  std::vector<int> res(data_length);
 
   if (rank == 0) {
     std::random_device rd;
     destinations.resize(size - 1);
-    std::iota(destinations.begin(), destinations.end(), 1);
+    std::ranges::iota(destinations, 1);
     std::shuffle(destinations.begin(), destinations.end(), rd);
-    data = frolova_s_star_topology::make_random_vector((size - 1) * DataLength);
+    data = frolova_s_star_topology::MakeRandomVector((size - 1) * data_length);
   }
 
   MPI_Bcast(destinations.data(), size - 1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Bcast(data.data(), (size - 1) * DataLength, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(data.data(), static_cast<int>((size - 1) * data_length), MPI_INT, 0, MPI_COMM_WORLD);
 
   if (rank != 0) {
     int dst = destinations[rank - 1];

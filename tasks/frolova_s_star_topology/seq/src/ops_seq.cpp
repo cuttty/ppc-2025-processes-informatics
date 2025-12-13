@@ -30,7 +30,7 @@ bool FrolovaSStarTopologySEQ::RunImpl() {
     tmp.push_back(i);
   }
 
-  GetOutput() = tmp.size();
+  GetOutput() = static_cast<int>(tmp.size());
 
   return true;
 }

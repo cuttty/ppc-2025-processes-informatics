@@ -2,10 +2,9 @@
 
 #include <mpi.h>
 
-#include <algorithm>
 #include <vector>
 
-constexpr int Term = -1;  // terminating parameter
+constexpr int kTerm = -1;  // terminating parameter
 
 namespace frolova_s_star_topology {
 
@@ -13,6 +12,7 @@ FrolovaSStarTopologyMPI::FrolovaSStarTopologyMPI(const InType &in) {
   SetTypeOfTask(GetStaticTypeOfTask());
   GetInput() = in;
   GetOutput() = 0;
+  dest_ = 0;
 }
 
 bool FrolovaSStarTopologyMPI::ValidationImpl() {
@@ -27,8 +27,8 @@ bool FrolovaSStarTopologyMPI::PreProcessingImpl() {
   int rank = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   if (rank != 0) {
-    dest = GetInput();
-    output.resize(GetInput());
+    dest_ = GetInput();
+    output_.resize(GetInput());
   }
   return true;
 }
@@ -56,13 +56,13 @@ bool FrolovaSStarTopologyMPI::RunImpl() {
       MPI_Send(buf.data(), buf_size, MPI_INT, dst, 0, MPI_COMM_WORLD);
     }
     for (int i = 0; i < nodes; i++) {
-      MPI_Send(&Term, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+      MPI_Send(&kTerm, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
     }
 
   } else {
-    MPI_Send(&dest, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
-    if (!data.empty()) {
-      MPI_Send(data.data(), data.size(), MPI_INT, 0, 0, MPI_COMM_WORLD);
+    MPI_Send(&dest_, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+    if (!data_.empty()) {
+      MPI_Send(data_.data(), static_cast<int>(data_.size()), MPI_INT, 0, 0, MPI_COMM_WORLD);
     } else {
       int dummy = 0;
       MPI_Send(&dummy, 0, MPI_INT, 0, 0, MPI_COMM_WORLD);
@@ -70,14 +70,14 @@ bool FrolovaSStarTopologyMPI::RunImpl() {
     while (true) {
       int src = 0;
       MPI_Recv(&src, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-      if (src == Term) {
+      if (src == kTerm) {
         break;
       }
       MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
       int buf_size = 0;
       MPI_Get_count(&status, MPI_INT, &buf_size);
-      output.resize(buf_size);
-      MPI_Recv(output.data(), buf_size, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      output_.resize(buf_size);
+      MPI_Recv(output_.data(), buf_size, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
   }
 
@@ -88,7 +88,7 @@ bool FrolovaSStarTopologyMPI::PostProcessingImpl() {
   int rank = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   if (rank != 0) {
-    GetOutput() = static_cast<OutType>(output.size());
+    GetOutput() = static_cast<OutType>(output_.size());
   }
   return true;
 }
