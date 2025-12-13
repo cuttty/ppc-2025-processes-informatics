@@ -1,9 +1,9 @@
 #include "mpi/frolova_s_star_topology/include/ops_mpi.hpp"
 
+#include <mpi.h>
+
 #include <algorithm>
 #include <vector>
-
-#include <mpi.h>
 
 constexpr int Term = -1;  // terminating parameter
 
