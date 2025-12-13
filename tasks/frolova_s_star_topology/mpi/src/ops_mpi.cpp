@@ -1,4 +1,4 @@
-#include "mpi/frolova_s_star_topology/include/ops_mpi.hpp"
+#include "frolova_s_star_topology/mpi/include/ops_mpi.hpp"
 
 #include <mpi.h>
 

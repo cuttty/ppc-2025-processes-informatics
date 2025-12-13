@@ -1,10 +1,8 @@
 #include "frolova_s_star_topology/seq/include/ops_seq.hpp"
 
-#include <numeric>
 #include <vector>
 
 #include "frolova_s_star_topology/common/include/common.hpp"
-#include "util/include/util.hpp"
 
 namespace frolova_s_star_topology {
 
@@ -15,46 +13,30 @@ FrolovaSStarTopologySEQ::FrolovaSStarTopologySEQ(const InType &in) {
 }
 
 bool FrolovaSStarTopologySEQ::ValidationImpl() {
-  return (GetInput() > 0) && (GetOutput() == 0);
+  return true;
 }
 
 bool FrolovaSStarTopologySEQ::PreProcessingImpl() {
-  GetOutput() = 2 * GetInput();
-  return GetOutput() > 0;
+  return true;
 }
 
 bool FrolovaSStarTopologySEQ::RunImpl() {
-  if (GetInput() == 0) {
-    return false;
+  const int size = 1e7;
+
+  std::vector<int> tmp;
+  tmp.reserve(size);
+
+  for (int i = 0; i < size; i++) {
+    tmp.push_back(i);
   }
 
-  for (InType i = 0; i < GetInput(); i++) {
-    for (InType j = 0; j < GetInput(); j++) {
-      for (InType k = 0; k < GetInput(); k++) {
-        std::vector<InType> tmp(i + j + k, 1);
-        GetOutput() += std::accumulate(tmp.begin(), tmp.end(), 0);
-        GetOutput() -= i + j + k;
-      }
-    }
-  }
+  GetOutput() = tmp.size();
 
-  const int num_threads = ppc::util::GetNumThreads();
-  GetOutput() *= num_threads;
-
-  int counter = 0;
-  for (int i = 0; i < num_threads; i++) {
-    counter++;
-  }
-
-  if (counter != 0) {
-    GetOutput() /= counter;
-  }
-  return GetOutput() > 0;
+  return true;
 }
 
 bool FrolovaSStarTopologySEQ::PostProcessingImpl() {
-  GetOutput() -= GetInput();
-  return GetOutput() > 0;
+  return true;
 }
 
 }  // namespace frolova_s_star_topology
