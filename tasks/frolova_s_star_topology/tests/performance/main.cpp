@@ -48,10 +48,10 @@ TEST(frolova_s_star_topology_perf, test_pipeline_run) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.validation(), true);
-    task.pre_processing();
-    task.run();
-    task.post_processing();
+    ASSERT_EQ(task.Validation(), true);
+    task.PreProcessing();
+    task.Run();
+    task.PostProcessing();
   }
 }
 
@@ -83,9 +83,9 @@ TEST(frolova_s_star_topology_perf, test_task_run) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.validation(), true);
-    task.pre_processing();
-    task.run();
-    task.post_processing();
+    ASSERT_EQ(task.Validation(), true);
+    task.PreProcessing();
+    task.Run();
+    task.PostProcessing();
   }
 }
