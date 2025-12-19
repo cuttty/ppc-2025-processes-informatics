@@ -14,11 +14,13 @@ class FrolovaSStarTopologyMPI : public BaseTask {
   }
   explicit FrolovaSStarTopologyMPI(const InType &in);
 
- protected:
+ public:
   bool ValidationImpl() override;
   bool PreProcessingImpl() override;
   bool RunImpl() override;
   bool PostProcessingImpl() override;
+
+ private:
   std::vector<int> data_;
   std::vector<int> output_;
   int dest_;
