@@ -39,5 +39,4 @@ bool FrolovaSStarTopologySEQ::PostProcessingImpl() {
   return true;
 }
 
-
 }  // namespace frolova_s_star_topology

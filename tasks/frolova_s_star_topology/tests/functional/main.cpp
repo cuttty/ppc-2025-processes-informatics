@@ -53,23 +53,22 @@ TEST(frolovaSStar, dataLength0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
 
- ASSERT_EQ(task.ValidationImpl(), true);
+    ASSERT_EQ(task.ValidationImpl(), true);
     task.PreProcessingImpl();
     task.RunImpl();
     task.PostProcessingImpl();
 
+    int is_failed = 0;
+    if (rank != 0) {
+      res = data;
+    }
 
-  int is_failed = 0;
-  if (rank != 0) {
-    res = data;
+    int failures = 0;
+    MPI_Reduce(&is_failed, &failures, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+    if (rank == 0) {
+      EXPECT_EQ(failures, 0);
+    }
   }
-
-  int failures = 0;
-  MPI_Reduce(&is_failed, &failures, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-  if (rank == 0) {
-    EXPECT_EQ(failures, 0);
-  }
-}
 }
 
 TEST(frolovaSStar, dataLength64) {
@@ -101,11 +100,10 @@ TEST(frolovaSStar, dataLength64) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-   ASSERT_EQ(task.ValidationImpl(), true);
+    ASSERT_EQ(task.ValidationImpl(), true);
     task.PreProcessingImpl();
     task.RunImpl();
     task.PostProcessingImpl();
-
   }
 
   int is_failed = 0;
@@ -149,11 +147,10 @@ TEST(frolovaSStar, dataLength1024) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-   ASSERT_EQ(task.ValidationImpl(), true);
+    ASSERT_EQ(task.ValidationImpl(), true);
     task.PreProcessingImpl();
     task.RunImpl();
     task.PostProcessingImpl();
-
   }
 
   int is_failed = 0;
@@ -213,6 +210,4 @@ TEST(frolovaSStar, dataLength32768) {
   if (rank == 0) {
     EXPECT_EQ(failures, 0);
   }
-
 }
-
