@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 ﻿InheritParentConfig: true
+=======
+InheritParentConfig: true
+>>>>>>> Stashed changes
 
 Checks: >
   -modernize-loop-convert,

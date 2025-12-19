@@ -52,11 +52,12 @@ TEST(frolovaSStar, dataLength0) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.Validation(), true);
-    task.PreProcessing();
-    task.Run();
-    task.PostProcessing();
-  }
+
+ ASSERT_EQ(task.ValidationImpl(), true);
+    task.PreProcessingImpl();
+    task.RunImpl();
+    task.PostProcessingImpl();
+
 
   int is_failed = 0;
   if (rank != 0) {
@@ -99,10 +100,11 @@ TEST(frolovaSStar, dataLength64) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
-    ASSERT_EQ(task.Validation(), true);
-    task.PreProcessing();
-    task.Run();
-    task.PostProcessing();
+   ASSERT_EQ(task.ValidationImpl(), true);
+    task.PreProcessingImpl();
+    task.RunImpl();
+    task.PostProcessingImpl();
+
   }
 
   int is_failed = 0;
@@ -146,10 +148,17 @@ TEST(frolovaSStar, dataLength1024) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
+<<<<<<< Updated upstream
     ASSERT_EQ(task.Validation(), true);
     task.PreProcessing();
     task.Run();
     task.PostProcessing();
+=======
+   ASSERT_EQ(task.ValidationImpl(), true);
+    task.PreProcessingImpl();
+    task.RunImpl();
+    task.PostProcessingImpl();
+>>>>>>> Stashed changes
   }
 
   int is_failed = 0;
@@ -193,10 +202,17 @@ TEST(frolovaSStar, dataLength32768) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
+<<<<<<< Updated upstream
     ASSERT_EQ(task.Validation(), true);
     task.PreProcessing();
     task.Run();
     task.PostProcessing();
+=======
+    ASSERT_EQ(task.ValidationImpl(), true);
+    task.PreProcessingImpl();
+    task.RunImpl();
+    task.PostProcessingImpl();
+>>>>>>> Stashed changes
   }
 
   int is_failed = 0;
@@ -209,4 +225,8 @@ TEST(frolovaSStar, dataLength32768) {
   if (rank == 0) {
     EXPECT_EQ(failures, 0);
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

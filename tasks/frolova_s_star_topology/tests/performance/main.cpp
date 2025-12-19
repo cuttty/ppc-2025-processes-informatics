@@ -51,10 +51,17 @@ TEST(frolovaSStar, pipelineRun) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
+<<<<<<< Updated upstream
     ASSERT_EQ(task.Validation(), true);
     task.PreProcessing();
     task.Run();
     task.PostProcessing();
+=======
+    ASSERT_EQ(task.ValidationImpl(), true);
+    task.PreProcessingImpl();
+    task.RunImpl();
+    task.PostProcessingImpl();
+>>>>>>> Stashed changes
   }
 }
 
@@ -86,9 +93,18 @@ TEST(frolovaSStar, taskRun) {
   if (rank != 0) {
     int dst = destinations[rank - 1];
     frolova_s_star_topology::FrolovaSStarTopologyMPI task(dst);
+<<<<<<< Updated upstream
     ASSERT_EQ(task.Validation(), true);
     task.PreProcessing();
     task.Run();
     task.PostProcessing();
   }
 }
+=======
+    ASSERT_EQ(task.ValidationImpl(), true);
+    task.PreProcessingImpl();
+    task.RunImpl();
+    task.PostProcessingImpl();
+  }
+}
+>>>>>>> Stashed changes
